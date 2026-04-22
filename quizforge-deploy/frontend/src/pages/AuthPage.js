@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -50,7 +50,6 @@ export default function AuthPage() {
         </div>
 
         <div className="card" style={{ padding: '2rem' }}>
-          {/* Toggle */}
           <div style={{ display: 'flex', background: 'var(--bg3)', borderRadius: '8px', padding: '4px', marginBottom: '1.8rem' }}>
             {['login', 'register'].map(m => (
               <button key={m} onClick={() => setMode(m)} style={{
@@ -68,22 +67,27 @@ export default function AuthPage() {
             {mode === 'register' && (
               <div className="form-group">
                 <label>Full Name</label>
-                <input name="name" value={form.name} onChange={handleChange}
-                  placeholder="John Doe" required />
+                <input name="name" value={form.name} onChange={handleChange} placeholder="John Doe" required />
               </div>
             )}
 
             <div className="form-group">
               <label>Email</label>
-              <input name="email" type="email" value={form.email} onChange={handleChange}
-                placeholder="you@example.com" required />
+              <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="you@example.com" required />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input name="password" type="password" value={form.password} onChange={handleChange}
-                placeholder="minimum 6 characters" required minLength={6} />
+              <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="minimum 6 characters" required minLength={6} />
             </div>
+
+            {mode === 'login' && (
+              <div style={{ textAlign: 'right', marginTop: '-0.5rem', marginBottom: '1rem' }}>
+                <Link to="/forgot-password" style={{ color: 'var(--accent)', fontSize: '0.85rem' }}>
+                  Forgot password?
+                </Link>
+              </div>
+            )}
 
             {mode === 'register' && (
               <>
@@ -110,18 +114,11 @@ export default function AuthPage() {
                   </div>
                 </div>
 
-                {/* Show instructor code field only when instructor is selected */}
                 {form.role === 'instructor' && (
                   <div className="form-group fade-up">
                     <label>Instructor Code 🔐</label>
-                    <input
-                      name="instructorCode"
-                      type="password"
-                      value={form.instructorCode}
-                      onChange={handleChange}
-                      placeholder="Enter secret instructor code"
-                      required
-                    />
+                    <input name="instructorCode" type="password" value={form.instructorCode}
+                      onChange={handleChange} placeholder="Enter secret instructor code" required />
                     <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.4rem' }}>
                       Contact the administrator to get the instructor code.
                     </p>

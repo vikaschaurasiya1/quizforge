@@ -5,6 +5,8 @@ import Navbar, { Footer } from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
 
 import AuthPage from './pages/AuthPage';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import InstructorDashboard from './pages/InstructorDashboard';
 import QuizEditor from './pages/QuizEditor';
 import StudentDashboard from './pages/StudentDashboard';
@@ -24,14 +26,20 @@ function AppRoutes() {
             ? <Navigate to={user.role === 'instructor' ? '/instructor' : '/student'} replace />
             : <AuthPage />}
           />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+
           <Route path="/instructor" element={<PrivateRoute role="instructor"><InstructorDashboard /></PrivateRoute>} />
           <Route path="/instructor/create" element={<PrivateRoute role="instructor"><QuizEditor /></PrivateRoute>} />
           <Route path="/instructor/edit/:id" element={<PrivateRoute role="instructor"><QuizEditor /></PrivateRoute>} />
+
           <Route path="/student" element={<PrivateRoute role="student"><StudentDashboard /></PrivateRoute>} />
           <Route path="/student/quiz/:id" element={<PrivateRoute role="student"><TakeQuiz /></PrivateRoute>} />
           <Route path="/student/results" element={<PrivateRoute role="student"><MyResults /></PrivateRoute>} />
           <Route path="/student/result/:id" element={<PrivateRoute><ResultDetail /></PrivateRoute>} />
+
           <Route path="/leaderboard" element={<PrivateRoute><Leaderboard /></PrivateRoute>} />
+
           <Route path="/" element={user
             ? <Navigate to={user.role === 'instructor' ? '/instructor' : '/student'} replace />
             : <Navigate to="/login" replace />}
